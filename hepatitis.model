@@ -1,0 +1,17 @@
+model{ 
+	for (i in 1:N){
+		for(j in 1:M) {
+			Y[i,j] ~ dnorm(mu[i,j], tau)
+			mu[i,j] <- alpha[i] + beta[i]*(log(minutes[j])-mean(log(minutes[]))) 
+			#unknown alpha and beta with -mean to make it neater
+		}
+		alpha[i] ~ dnorm(alpha0,taua) #hierarchycal prior construction
+		beta[i] ~ dnorm(beta0,taub) #hierarchycal prior construction
+	}
+	alpha0 ~ dunif(-100,100) #uniform priors
+	beta0 ~ dunif(-100,100) #uniform priors
+	taua ~ dgamma(1e-3,1e-6)
+	taub ~ dgamma(1e-3,1e-6)
+	tau ~ dgamma(1e-3,1e-6)	
+
+}
